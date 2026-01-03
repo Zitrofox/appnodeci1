@@ -20,6 +20,8 @@ name: Node.js CI
            strategy:       
              matrix:         
                node-version: [16.x]       
+               # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
                
            steps:     
            - uses: actions/checkout@v2     
@@ -29,3 +31,18 @@ name: Node.js CI
                node-version: ${{ matrix.node-version }}         
                cache: ‘npm’     
            - run: npm ci
+
+         deploy:    
+           
+           runs-on: ubuntu-latest    
+           steps:      
+             - uses: actions/checkout@v2      
+             - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action        
+               with:          
+                  heroku_api_key: ${{secrets.HEROKU_API_KEY}}          
+                  heroku_app_name: “<nombre-de-aplicación-en-heroku>”           
+                  heroku_email: “<nuestro-correo-en-heroku”
+
+
+
+           
